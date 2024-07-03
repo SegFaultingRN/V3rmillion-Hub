@@ -294,5 +294,5 @@ makebutton("waypointpt","basicbuttonpage", "teleport to waypoint", function()
 end)
 
 makebutton("InfiniteYield","scriptspage","Infinite Yield", function()
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source', true))()
 end)
