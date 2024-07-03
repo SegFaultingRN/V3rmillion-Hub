@@ -1,6 +1,9 @@
 Documentation:
 this documentation will go through the ins and outs of using V3rmillion hub to make UI elements
 
+some premade pages are "basicbuttonpage" , "basicbutton2page", and "scriptspage"
+
+
 the first function is makepagebutton(name,location,text)
 makepagebutton does what it implies, it makes a page where buttons can be stored
 the arguments of makepagebutton are (name,location,text), name is a string that is just used to name the button, location is a UDIM2 coordinate to manually place where you want the button to be, and text is a string that makes what text the button will have
