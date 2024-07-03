@@ -1,0 +1,65 @@
+Documentation:
+this documentation will go through the ins and outs of using V3rmillion hub to make UI elements
+
+the first function is makepagebutton(name,location,text)
+makepagebutton does what it implies, it makes a page where buttons can be stored
+the arguments of makepagebutton are (name,location,text), name is a string that is just used to name the button, location is a UDIM2 coordinate to manually place where you want the button to be, and text is a string that makes what text the button will have
+
+Example of makepagebutton:
+  makepagebutton("testbutton", UDim2.new(0,140,0,120), "click me!")
+  this makes a button with the name "testbutton", that is located at (140,120), and says "click me!" on the button
+  when you use makepagebutton, it makes a page that is named after the name of the button, so in this case the page created would be named "testbuttonpage"
+
+
+
+the second function is makebutton(name,page,text,func)
+makebutton makes a text button that executes a script when pressed
+it's arguments are (name,page,text,func)
+    -name is a string that let's you name the button
+    -page is a string that decides which page to put the button one, for example if I wanted to put this button on the page that we made earlier, I would put the string "testbuttonpage"
+    -text is a string that is just what the button will say
+    -func is the function that will be executed when you press the button
+        example of makebutton:
+            makebutton("printbutton", "testbuttonpage", "print text", function() 
+                      print("this was printed by printbutton")
+                            end)
+            this makes a button named "printbutton", that is located on the page that we made above, with text that says "print text", and it prints "this was printed by printbutton"
+
+
+
+
+
+the third function is maketogglebutton(name,page,text,var,func,func2)
+          the arguments are (name,page,text,var,func,func2)
+          - name is a string that names the button
+          - page is a string that decides which page the button is on
+          - text is a string, text is what the button will say
+          - var is a boolean that can be used in while loops (even if you do not use var, always include it in the function to ensure your button works)
+          - func is a function that will be executed when the toggle button is turned on
+          - func2 is a function that will be executed when the toggle button is turned off
+
+                    example of a basic speed hack toggle button with maketogglebutton:
+                                  maketogglebutton("speedhack", "testbuttonpage", "increase player speed", on, function() 
+                                                          game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
+                                                              end,
+                                                          function() 
+                                                                  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                                                                  end)
+                    this makes a button named "speedhack" on the page we made above, that says "increase player speed", with the bolean on (we didnt use it this time), that increases the player's speed when turned on and resets the player speed to normal when turned off
+
+
+                  example of a while loop toggle button made with maketogglebutton:
+                                maketogglebutton("while", "testbuttonpage", "loop print", on, function() 
+                                                  on = true
+                                                  while on do
+                                                      wait()
+                                                      print("funny")
+                                                      end
+                                                    end,
+                                                  function() 
+                                                        on = false
+                                                        end)          
+                this makes a button named "while" on the page we made above, that says "increase player speed", with the bolean on (we used it this time), that keeps printing "funny" until turned off
+
+
+
