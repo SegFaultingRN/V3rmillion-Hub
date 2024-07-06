@@ -1,6 +1,8 @@
 wait(2)
 local players = game:GetService("Players")
 local lplayer = players.LocalPlayer
+local mouse = game:GetService("MouseService")
+local uis = game:GetService("UserInputService")
 local background = Color3.fromRGB(0,0,0)
 local highlight = Color3.fromRGB(72, 72, 72)
 local v3rmhub = Instance.new("ScreenGui")
