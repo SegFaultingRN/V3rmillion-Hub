@@ -232,7 +232,111 @@ local function maketogglebutton(name,page,text,var,func,func2)
 	
 
 end
+local function maketogglekeybind(name,page,text,keybind,active,func,func2)
+	local button = Instance.new("TextButton")
+	local light = Color3.new(0.333333, 1, 0)
+	button.Name = name
+	button.Parent = v3rmhub_central:FindFirstChild(page)
+	button.BackgroundTransparency = 0.1
+	local button2 = Instance.new("TextButton")
+	--button2.Parent = button
+	local corner = Instance.new("UICorner")
+	corner.Parent = button
+	corner.CornerRadius = UDim.new(0,5)
+	button.Text = text
+	button.BackgroundColor3 = background
+	button.TextColor = BrickColor.new("White")
+	button.Size = UDim2.new(0,300,0,40)
+	button.Position = UDim2.new(0,0,0,0)
+	button.TextXAlignment = Enum.TextXAlignment.Left
+	local bound = Instance.new("TextLabel")
+	bound.Parent = button
+	bound.Size = UDim2.new(0,140,0,30)
+	bound.Position = UDim2.new(0,80,0,5)
+	bound.BackgroundTransparency = 0.5
+	bound.BackgroundColor3 = Color3.fromRGB(197, 197, 197)
+	bound.Text = "Bind to key"
+	bound.TextColor3 = Color3.fromRGB(239, 239, 239)
+	bound.TextSize = 10
+	local corner2 = Instance.new("UICorner")
+	corner2.Parent = bound
+	corner2.CornerRadius = UDim.new(0,5)
+	local pressed = false
+	local over = false
 
+	local check = 0
+	button.MouseEnter:Connect(function()
+		button.BackgroundColor3 = highlight
+		over = true
+	end)
+	button.MouseLeave:Connect(function()
+		button.BackgroundColor3 = background
+		over = false
+	end)
+	
+	button.MouseButton1Down:Connect(function()
+		pressed = true
+		while pressed and over do
+			
+			wait()
+			uis.InputBegan:Connect(function(input,down)
+				if pressed then
+					keybind = input.KeyCode
+					end
+			end)
+			uis.InputEnded:Connect(function() end)
+			
+		end
+		active = false
+		bound.Text = "Bound to "..keybind.Name
+	
+	end)
+	button.MouseButton1Up:Connect(function()
+		pressed = false
+	end)
+	uis.InputBegan:Connect(function(input, down)  
+		--print(input)
+		wait()
+		if input.KeyCode == keybind then
+		
+			--active = true
+			
+			if active == false then
+				
+				active = true
+				button.BackgroundColor3 = light
+				func()
+			
+				
+			else 
+				func2()
+				active = false
+				button.BackgroundColor3 = background
+				
+			
+				
+			end
+	
+		end
+		
+	end)
+	uis.InputEnded:Connect(function(input,down)  end)
+		
+		
+		
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+end
 --Enum.EasingStyle.
 
 
@@ -296,3 +400,24 @@ end)
 makebutton("InfiniteYield","scriptspage","Infinite Yield", function()
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source', true))()
 end)
+
+
+
+local gravity = game.Workspace.Gravity
+maketogglekeybind("swim","basicbutton2page","air swim",a,one,function() 
+	one = true
+	
+	repeat 
+		wait(1)
+		lplayer.Character.Humanoid:SetStateEnabled("GettingUp",false)
+		lplayer.Character.Humanoid:ChangeState("Swimming",true)
+		game.Workspace.Gravity = 0
+	until one == false
+	if one == false then
+		lplayer.Character.Humanoid:SetStateEnabled("GettingUp",true)
+		lplayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming,false)
+		game.Workspace.Gravity = gravity
+	end
+end, function()
+	one = false
+	end)
