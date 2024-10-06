@@ -64,5 +64,51 @@ the third function is maketogglebutton(name,page,text,var,func,func2)
                                                         end)          
                 this makes a button named "while" on the page we made above, that says "increase player speed", with the bolean on (we used it this time), that keeps printing "funny" until turned off
 
+the fourth function is  maketogglekeybind(name,page,text,keybind,active,func,func2)
+          - name is a string that names the button
+          - page is a string that decides which page the button is on
+          - text is a string, text is what the button will say
+          - keybind is a variable that you can set (it will always change when you change keybinds though)
+          - active is a bolean that denotes if it is active or not
+          - func is a function that you make that will be executed when the keybind is pressed
+          - func2 is a function that you make which will be activated once the bound key is pressed a second time (I recommend using func2 to disable func)
+          an example of this would be:
+            maketogglekeybind("invisible","basicbutton2page","Invisibility",x,two, function()
+	              two = true
+	
+	              print("on")
+	            for i,v in pairs(lplayer.Character:GetChildren()) do
+		          if v:IsA("MeshPart") then
+			        v.Transparency = 1
+		          end
+		          if v:IsA("Accessory") then
+		          	v:FindFirstChildWhichIsA("MeshPart").Transparency = 1
+		          end
+	          end
+	
+	
+          end, function()
+	        two = false
+	        print("off")
+	        for i,v in pairs(lplayer.Character:GetChildren()) do
+    		      if v:IsA("MeshPart") then
+			              v.Transparency = 0
+		            end
+		          if v:IsA("Accessory") then
+			          v:FindFirstChildWhichIsA("MeshPart").Transparency = 0
+		          end
+	          end
+          end)
+          this example creates a keybind that turns that player invisible, the name of the button is "invisible", the page it is located on is "basicbutton2page", the text it displays is "Invisibility", x is our keybind variable, two our bolean. When the button is pressed and held with a mouse and then a key is pressed, that key will then be bound to that button.
+
+the fifth function is notify(message)
+      -message is a string
+      when ran, it will make a notification displaying a message
+      example:
+            notify("error 404")
+            this will make a notification that says error 404
+            All keybinds automatically send notifications when a cheat is toggled on or off
+      
+
 
 
