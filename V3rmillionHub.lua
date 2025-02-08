@@ -1,20 +1,17 @@
 task.wait(2)
 local players = game:GetService("Players")
-local lplayer = game.Players.LocalPlayer 
+local lplayer = players.LocalPlayer
 local mouse = game:GetService("MouseService")
 local uis = game:GetService("UserInputService")
 local background = Color3.fromRGB(0,0,0)
 local highlight = Color3.fromRGB(72, 72, 72)
 local v3rmhub = Instance.new("ScreenGui")
-v3rmhub.Parent = game.CoreGui
+v3rmhub.Parent = game:GetService("CoreGui")
 v3rmhub.Enabled = true
 v3rmhub.ResetOnSpawn = false
 v3rmhub.Name = "v3rmhub"
-local ratio = Instance.new("UIScale")
-ratio.Scale = 1
-ratio.Parent = v3rmhub
 
-local mousey = lplayer:GetMouse()
+
 local function Load()
 	local loading =  Instance.new("Frame")
 	loading.Parent = v3rmhub
@@ -50,10 +47,10 @@ local function Load()
 	bar2.Text = ""
 	bar2.BackgroundColor3 = Color3.fromRGB(11, 225, 0)
 	for i=0, 290, 1 do
-		task.wait()
+		wait()
 		bar2.Size = UDim2.new(0,i,0,20)
 	end
-	
+	wait(2)
 	loading:Destroy()
 end
 --Load()
@@ -88,6 +85,54 @@ local function homebutton()
 
 end
 homebutton()
+
+local function makepagebutton(name,location,text)
+	local button = Instance.new("TextButton")
+	button.Name = name
+	button.Parent = v3rmhub_central
+	local corner = Instance.new("UICorner")
+	corner.Parent = button
+	corner.CornerRadius = UDim.new(0,10)
+	button.Text = text
+	button.BackgroundColor3 = background
+	button.TextColor = BrickColor.new("White")
+	button.Size = UDim2.new(0,80,0,40)
+	button.Position = location
+	local newpage = Instance.new("ScrollingFrame")
+	newpage.Size = UDim2.new(0,300, 0, 399)
+	newpage.Active = false
+	newpage.Visible = false
+	newpage.Name = name.."page"
+	newpage.BackgroundColor3 = background
+	newpage.Parent = v3rmhub_central
+	newpage.Position = UDim2.new(0,100, 0, 0)
+	--newpage.Draggable = true
+	local layout = Instance.new("UIListLayout")
+	layout.Parent = newpage
+	layout.Padding = UDim.new(0,5)
+	button.MouseButton1Click:Connect(function()
+		for i,v in pairs(v3rmhub_central:GetChildren()) do
+			if v:IsA("ScrollingFrame") and v.Name ~= button.Name.."page" then
+				v.Active = false
+				v.Visible = false
+				v3rmhub_central.Draggable = true
+				v3rmhub_central.Active = true
+			else
+				v.Active = true
+				v.Visible = true
+				--v.Draggable = true
+				v3rmhub_central.Draggable = true
+				v3rmhub_central.Active = true
+
+			end
+
+		end
+	end)
+
+
+
+end
+
 local function notify(message)
 	local notibox = Instance.new("Frame")
 	notibox.Active = true
@@ -121,71 +166,6 @@ local function notify(message)
 	notibox:TweenPosition(UDim2.new(0,1600,0,normaltweenheight), Enum.EasingDirection.In, Enum.EasingStyle.Sine, 0.5, false)
 	task.wait(4)
 	notibox:Destroy()
-	
-	
-end
-
-
-local function makepagebutton(name,location,text)
-	local button = Instance.new("TextButton")
-	button.Name = name
-	button.Parent = v3rmhub_central
-	local corner = Instance.new("UICorner")
-	corner.Parent = button
-	corner.CornerRadius = UDim.new(0,10)
-	button.Text = text
-	button.BackgroundColor3 = background
-	button.TextColor = BrickColor.new("White")
-	button.Size = UDim2.new(0,80,0,40)
-	button.Position = location
-	local newpage = Instance.new("ScrollingFrame")
-	newpage.Size = UDim2.new(0,300, 0, 399)
-	newpage.Active = false
-	newpage.Visible = false
-	newpage.Name = name.."page"
-	newpage.BackgroundColor3 = background
-	newpage.Parent = v3rmhub_central
-	newpage.Position = UDim2.new(0,100, 0, 0)
-	--newpage.Draggable = true
-	local layout = Instance.new("UIListLayout")
-	layout.Parent = newpage
-	layout.Padding = UDim.new(0,10)
-	button.MouseButton1Click:Connect(function()
-		for i,v in pairs(v3rmhub_central:GetChildren()) do
-			if v:IsA("ScrollingFrame") and v.Name ~= button.Name.."page" then
-				v.Active = false
-				v.Visible = false
-				v3rmhub_central.Draggable = true
-				v3rmhub_central.Active = true
-			else
-				v.Active = true
-				v.Visible = true
-				--v.Draggable = true
-				v3rmhub_central.Draggable = true
-				v3rmhub_central.Active = true
-
-			end
-
-		end
-	end)
-	button.TouchTap:Connect(function()
-		for i,v in pairs(v3rmhub_central:GetChildren()) do
-			if v:IsA("ScrollingFrame") and v.Name ~= button.Name.."page" then
-				v.Active = false
-				v.Visible = false
-				v3rmhub_central.Draggable = true
-				v3rmhub_central.Active = true
-			else
-				v.Active = true
-				v.Visible = true
-				--v.Draggable = true
-				v3rmhub_central.Draggable = true
-				v3rmhub_central.Active = true
-
-			end
-
-		end
-	end)
 
 
 end
@@ -193,7 +173,6 @@ end
 makepagebutton("basicbutton",UDim2.new(0,0,0,60),"Basic cheats")
 makepagebutton("basicbutton2",UDim2.new(0,0,0,160),"other cheats")
 makepagebutton("scripts",UDim2.new(0,0,0,240),"Scripts")
-makepagebutton("settings", UDim2.new(0,0,0,340),"Settings")
 
 
 
@@ -203,7 +182,7 @@ local function makebutton(name,page,text,func)
 	button.Parent = v3rmhub_central:FindFirstChild(page)
 	local corner = Instance.new("UICorner")
 	corner.Parent = button
-	corner.CornerRadius = UDim.new(0,5)
+	corner.CornerRadius = UDim.new(0,10)
 	button.Text = text
 	button.BackgroundColor3 = background
 	button.TextColor = BrickColor.new("White")
@@ -220,6 +199,119 @@ local function makebutton(name,page,text,func)
 
 end
 
+
+local function maketextboxbutton(name,page,text,variable,func)
+	local button = Instance.new("TextButton")
+	button.Name = name
+	button.Parent = v3rmhub_central:FindFirstChild(page)
+	local corner = Instance.new("UICorner")
+	corner.Parent = button
+	corner.CornerRadius = UDim.new(0,10)
+	button.Text = text
+	button.BackgroundColor3 = background
+	button.TextColor = BrickColor.new("White")
+	button.Size = UDim2.new(0,120,0,40)
+	button.Position = UDim2.new(0,0,0,0)
+	local textbox = Instance.new("TextBox")
+	textbox.Name = name
+	textbox.Parent = button
+	
+	textbox.Text = text
+	textbox.BackgroundColor3 = Color3.fromRGB(29, 29, 28)
+	textbox.TextColor = BrickColor.new("White")
+	textbox.Size = UDim2.new(0,120,0,40)
+	textbox.Position = UDim2.new(0,140,0,0)
+	local corner2 = Instance.new("UICorner")
+	corner2.Parent = textbox
+	corner2.CornerRadius = UDim.new(0,10)
+	button.MouseButton1Click:Connect(func)
+	--textbox:GetPropertyChangedSignal()
+	textbox:GetPropertyChangedSignal("Text"):Connect(function()
+		usetext = textbox.Text
+		
+		--return usetext
+	end)
+	button.MouseEnter:Connect(function()
+		button.BackgroundColor3 = highlight
+	end)
+	button.MouseLeave:Connect(function()
+		button.BackgroundColor3 = background
+	end)
+
+end
+
+
+local function maketogglebutton(name,page,text,var,func,func2)
+	local button = Instance.new("TextButton")
+	button.Name = name
+	button.Parent = v3rmhub_central:FindFirstChild(page)
+	local corner = Instance.new("UICorner")
+	corner.Parent = button
+	corner.CornerRadius = UDim.new(0,10)
+	button.Text = text
+	button.BackgroundColor3 = background
+	button.TextColor = BrickColor.new("White")
+	button.Size = UDim2.new(0,120,0,40)
+	button.Position = UDim2.new(0,0,0,0)
+	local otherbutton = Instance.new("TextButton")
+	otherbutton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	otherbutton.Parent = button
+	otherbutton.Position = UDim2.new(0,140,0,10)
+	otherbutton.Size = UDim2.new(0,40,0,20)
+	local corner2 = Instance.new("UICorner")
+	corner2.Parent = otherbutton
+	corner2.CornerRadius = UDim.new(0,100)
+	otherbutton.Text = ""
+	local button3 = Instance.new("TextButton")
+	button3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	button3.Parent = otherbutton
+	local corner3 = Instance.new("UICorner")
+	button3.Size = UDim2.new(0,20,0,20)
+	corner3.Parent = button3
+	corner3.CornerRadius = UDim.new(0,100)
+	button3.Text = ""
+	local bolean1 = false
+
+
+
+
+	button.MouseButton1Click:Connect(function()
+		--print(bolean)
+		if bolean1 == false then
+			bolean1 = true
+
+
+			button3:TweenPosition(UDim2.new(0,20,0,0), "Out", "Linear", 0.2, false)
+			otherbutton.BackgroundColor3 = Color3.fromRGB(65, 255, 32)
+			func()
+
+
+
+			--UDim2.new(0,40,0,0)
+
+		elseif bolean1 == true then
+			otherbutton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+			bolean1 = false
+
+			button3:TweenPosition(UDim2.new(0,0,0,0), "In", "Linear", 0.2, false)
+			func2()
+
+
+
+			--UDim2.new(0,40,0,0)
+		end
+		return bolean1
+
+	end)
+	button.MouseEnter:Connect(function()
+		button.BackgroundColor3 = highlight
+	end)
+	button.MouseLeave:Connect(function()
+		button.BackgroundColor3 = background
+	end)
+
+
+end
 local function maketogglekeybind(name,page,text,keybind,active,func,func2)
 	local button = Instance.new("TextButton")
 	local light = Color3.new(0.333333, 1, 0)
@@ -261,73 +353,57 @@ local function maketogglekeybind(name,page,text,keybind,active,func,func2)
 		button.BackgroundColor3 = background
 		over = false
 	end)
-	
+
 	button.MouseButton1Down:Connect(function()
 		pressed = true
 		while pressed and over do
-			
+
 			task.wait()
 			uis.InputBegan:Connect(function(input,down)
 				if pressed then
 					keybind = input.KeyCode
-					end
+				end
 			end)
 			uis.InputEnded:Connect(function() end)
-			
+
 		end
 		active = false
 		bound.Text = "Bound to "..keybind.Name
-	
+
 	end)
 	button.MouseButton1Up:Connect(function()
 		pressed = false
-		
+
 	end)
 	uis.InputBegan:Connect(function(input, down)  
 		--print(input)
 		task.wait()
 		if input.KeyCode == keybind then
-		
+
 			--active = true
-			
+
 			if active == false then
-				
+
 				active = true
 				button.BackgroundColor3 = light
 				func()
 				notify(text.." has been enabled")
-			
-				
+
+
 			else 
 				func2()
 				active = false
 				button.BackgroundColor3 = background
 				notify(text.." has been disabled")
-				
-			
-				
+
+
+
 			end
-	
+
 		end
-		
+
 	end)
 	uis.InputEnded:Connect(function(input,down)  end)
-		
-		
-		
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-end
 
 
 
@@ -335,76 +411,11 @@ end
 
 
 
-local function maketogglebutton(name,page,text,var,func,func2)
-	local button = Instance.new("TextButton")
-	button.Name = name
-	button.Parent = v3rmhub_central:FindFirstChild(page)
-	local corner = Instance.new("UICorner")
-	corner.Parent = button
-	corner.CornerRadius = UDim.new(0,10)
-	button.Text = text
-	button.BackgroundColor3 = background
-	button.TextColor = BrickColor.new("White")
-	button.Size = UDim2.new(0,120,0,40)
-	button.Position = UDim2.new(0,0,0,0)
-	local otherbutton = Instance.new("TextButton")
-	otherbutton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-	otherbutton.Parent = button
-	otherbutton.Position = UDim2.new(0,140,0,10)
-	otherbutton.Size = UDim2.new(0,40,0,20)
-	local corner2 = Instance.new("UICorner")
-	corner2.Parent = otherbutton
-	corner2.CornerRadius = UDim.new(0,100)
-	otherbutton.Text = ""
-	local button3 = Instance.new("TextButton")
-	button3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	button3.Parent = otherbutton
-	local corner3 = Instance.new("UICorner")
-	button3.Size = UDim2.new(0,20,0,20)
-	corner3.Parent = button3
-	corner3.CornerRadius = UDim.new(0,100)
-	button3.Text = ""
-	local bolean1 = false
-	
 
 
 
 
-	button.MouseButton1Click:Connect(function()
-		--print(bolean)
-		if bolean1 == false then
-			bolean1 = true
 
-
-			button3:TweenPosition(UDim2.new(0,20,0,0), "Out", "Linear", 0.2, false)
-			otherbutton.BackgroundColor3 = Color3.fromRGB(65, 255, 32)
-			func()
-
-
-
-			--UDim2.new(0,40,0,0)
-
-		elseif bolean1 == true then
-			otherbutton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-			bolean1 = false
-
-			button3:TweenPosition(UDim2.new(0,0,0,0), "In", "Linear", 0.2, false)
-			func2()
-
-
-
-			--UDim2.new(0,40,0,0)
-		end
-		return bolean1
-
-	end)
-	button.MouseEnter:Connect(function()
-		button.BackgroundColor3 = highlight
-	end)
-	button.MouseLeave:Connect(function()
-		button.BackgroundColor3 = background
-	end)
-	
 
 
 
@@ -420,7 +431,9 @@ local waypoint = CFrame.new()
 
 
 
-
+local function x() 
+	print("2")
+end
 makebutton("lolbutton","basicbuttonpage","print something", function() print('2') end)
 
 
@@ -458,7 +471,7 @@ end)
 
 
 
-maketogglebutton("lol","basicbuttonpage","thing",v, function() print("thing") end, function() end)
+
 
 makebutton("waypoint","basicbuttonpage", "drop waypoint", function()
 	waypoint = lplayer.Character.HumanoidRootPart.CFrame
@@ -472,25 +485,14 @@ makebutton("InfiniteYield","scriptspage","Infinite Yield", function()
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source', true))()
 end)
 
-maketogglekeybind("t","basicbutton2page","test keybind",a,on,function() 
-	on = true
-	repeat
-		wait(0.1)
-		print("keybind on")
-	until on == false
-	print(on)
-end, function()
-	on = false
-	print("keybind off")
-end)
---maketogglekeybind("t","basicbutton2page","test keybind2",a,"thing","thing","thing")
---maketogglekeybind("t","basicbutton2page","test keybind3",a,"thing","thing","thing")
+
+
 local gravity = game.Workspace.Gravity
 maketogglekeybind("swim","basicbutton2page","air swim",a,one,function() 
 	one = true
-	
+
 	repeat 
-		wait(1)
+		task.wait(1)
 		lplayer.Character.Humanoid:SetStateEnabled("GettingUp",false)
 		lplayer.Character.Humanoid:ChangeState("Swimming",true)
 		game.Workspace.Gravity = 0
@@ -503,53 +505,109 @@ maketogglekeybind("swim","basicbutton2page","air swim",a,one,function()
 end, function()
 	one = false
 end)
-maketogglebutton("es","basicbuttonpage","esp", pri, function()
-	for i,v in pairs(game.Players:GetChildren()) do
-	
-		local box = Instance.new("Highlight")
-		box.Parent = v.Character
-		
-	end
+
+maketogglekeybind("fly","basicbutton2page","Fly","x",on,function()
+	local velo = Instance.new("LinearVelocity")
+	velo.Parent = lplayer.Character.HumanoidRootPart
+	velo.MaxForce = 20000000
+	velo.Attachment0 = velo.Parent.RootAttachment
+	velo.RelativeTo = Enum.ActuatorRelativeTo.Attachment0
+	local x = 0
+	local y = 0
+	local z = 0
+
+	uis.InputBegan:Connect(function(input)
+		if input.KeyCode == Enum.KeyCode.D then
+			velo.Enabled = true
+
+			x = 40
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.E then
+			velo.Enabled = true
+
+			y = 40
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.W then
+			velo.Enabled = true
+
+			z = -40
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.S then
+			velo.Enabled = true
+
+			z = 40
+			velo.VectorVelocity += Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.Q then
+			velo.Enabled = true
+			y = -40
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+	end)
+	uis.InputEnded:Connect(function(input)
+		if input.KeyCode == Enum.KeyCode.D then
+			velo.Enabled = true
+			x = 0
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.E then
+			velo.Enabled = true
+
+			y = 0
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.W then
+			velo.Enabled = true
+
+			z = 0
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.S then
+			velo.Enabled = true
+
+			z = 0
+			velo.VectorVelocity += Vector3.new(x,y,z)
+		end
+		if input.KeyCode == Enum.KeyCode.Q then
+			velo.Enabled = true
+
+			y = 0
+			velo.VectorVelocity = Vector3.new(x,y,z)
+		end
+	end)
+	notify("fly is active, press E to go up and Q to go down")
+
+
 end, function()
-	for i,v in pairs(game.Players:GetChildren()) do
+	on = false
+	lplayer.Character.HumanoidRootPart.LinearVelocity:Destroy()
+end)
+
+maketextboxbutton("name","basicbuttonpage","t",usetext,function()
+	
+	print(usetext)
+end)
+
+
+local vis = 0
+
+
+uis.InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.RightShift then
 		
-		v.Character.Highlight:Destroy()
+		vis += 1
+		if vis < 2 then
+			v3rmhub_central.Visible = false
+			v3rmhub_central.Interactable = false
 		
+		end
+		if vis > 1 then
+			v3rmhub_central.Visible = true
+			--v3rmhub_central.Interactable = true
+			vis = 0
+		end
 	end
 end)
-maketogglekeybind("invisible","basicbutton2page","Invisibility",x,two, function()
-	two = true
-	
-	print("on")
-	for i,v in pairs(lplayer.Character:GetChildren()) do
-		if v:IsA("MeshPart") then
-			v.Transparency = 1
-		end
-		if v:IsA("Accessory") then
-			v:FindFirstChildWhichIsA("MeshPart").Transparency = 1
-		end
-	end
-	
-	
-end, function()
-	two = false
-	print("off")
-	for i,v in pairs(lplayer.Character:GetChildren()) do
-		if v:IsA("MeshPart") then
-			v.Transparency = 0
-		end
-		if v:IsA("Accessory") then
-			v:FindFirstChildWhichIsA("MeshPart").Transparency = 0
-		end
-	end
-end)
-
-
-
-maketogglebutton("size","settingspage","Phone sizing", ap, function() 
-	ratio.Scale = 0.8
-	
-end, function()
-	ratio.Scale = 1
-end)
-
