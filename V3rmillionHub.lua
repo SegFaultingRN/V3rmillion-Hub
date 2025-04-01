@@ -10,7 +10,7 @@ v3rmhub.Parent = game:GetService("CoreGui")
 v3rmhub.Enabled = true
 v3rmhub.ResetOnSpawn = false
 v3rmhub.Name = "v3rmhub"
-
+--random text
 
 local function Load()
 	local loading =  Instance.new("Frame")
